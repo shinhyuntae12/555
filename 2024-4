@@ -1,0 +1,12 @@
+import random     # 난수 발생 함수 호출
+guess_number= random.randint(1, 100)
+print("숫자를 맞혀 보세요. (1 ~ 100)")
+users_input= int(input())    # 사용자 입력을 받음
+while (users_input != guess_number): 
+   if users_input> guess_number :
+       print("숫자가 너무 큽니다.")
+   else :   
+       print("숫자가 너무 작습니다.")
+   users_input= int(input())      
+
+print("정답!", "입력 숫자는", users_input, "이다.") 
