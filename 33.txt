@@ -1,0 +1,23 @@
+import pandas as pd
+import argparse
+from sklearn.ensemble import IsolationForest
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import precision_score
+
+# 데이터 로드 함수
+def load_data(file_path):
+    data = pd.read_csv(file_path)
+    data['INV_DATETIME'] = pd.to_datetime(data['INV_DATETIME'])
+    return data
+
+# 이동 평균 및 시간 데이터 생성 함수
+def preprocess_data(data):
+    data['hour'] = data['INV_DATETIME'].dt.hour
+    data['day_of_week'] = data['INV_DATETIME'].dt.dayofweek
+    data['day'] = data['INV_DATETIME'].dt.day
+    data['month'] = data['INV_DATETIME'].dt.month
+    data['year'] = data['INV_DATETIME'].dt.year
+
+    data['rolling_avg_tmp'] = data['INT_TMP'].rolling(window=3).mean()
+    data['rolling_avg_humidity'] = data['INT_REL_HD'].rolling(window=3).mean()
+    data.dropna(inplace=True)
